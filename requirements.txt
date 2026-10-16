@@ -1,0 +1,30 @@
+# Основной фреймворк для Telegram-ботов
+aiogram
+
+# Интеллект: Новый SDK Google для Gemini 3.1 Frontier
+google-genai
+
+# Интеллект: Работа с Groq (Llama 3.3 и Whisper v3)
+groq
+
+# Озвучка: HTTP-клиент для ElevenLabs и OpenAI
+httpx
+openai
+
+# Озвучка: Бесплатный движок Microsoft Edge TTS
+edge-tts
+
+# Документация: Генерация PDF с поддержкой кириллицы
+fpdf2
+
+# База данных: Асинхронная работа с SQLite
+aiosqlite
+
+# Системные: Загрузка переменных из .env
+python-dotenv
+
+# Время: Работа с часовыми поясами
+pytz
+
+# Обработка аудио (может потребоваться для конвертации)
+pydub

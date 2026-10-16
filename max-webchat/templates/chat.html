@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Чат с {{ client_id }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .chat-box { height: 400px; overflow-y: scroll; border: 1px solid #ddd; padding: 15px; background: white; }
+        .msg-client { text-align: left; color: blue; }
+        .msg-bot { text-align: right; color: green; }
+    </style>
+</head>
+<body class="container mt-4">
+    <a href="/">← Назад</a>
+    <h3>Чат с {{ client_id }}</h3>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="chat-box mb-3">
+                {% for msg in history %}
+                    <div class="msg-{{ msg[0] }}">
+                        <small>[{{ msg[2] }}] {{ "Клиент" if msg[0] == "client" else "ИИ" }}:</small>
+                        <p>{{ msg[1] }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <form action="/action/{{ client_id }}" method="post" class="input-group">
+                <input type="hidden" name="action" value="send_manual">
+                <input type="text" name="value" class="form-control" placeholder="Написать ответ вручную...">
+                <button class="btn btn-primary">Отправить</button>
+            </form>
+            <p class="text-muted small">* При отправке ручного ответа ИИ выключается автоматически.</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card p-3">
+                <h5>Управление</h5>
+                <form action="/action/{{ client_id }}" method="post" class="mb-3">
+                    <input type="hidden" name="action" value="toggle_ai">
+                    <label>Режим ИИ:</label>
+                    <select name="value" class="form-select" onchange="this.form.submit()">
+                        <option value="1" {{ 'selected' if ai_mode == 1 }}>Робот (ВКЛ)</option>
+                        <option value="0" {{ 'selected' if ai_mode == 0 }}>Человек (ВЫКЛ)</option>
+                    </select>
+                </form>
+
+                <form action="/action/{{ client_id }}" method="post">
+                    <input type="hidden" name="action" value="set_scenario">
+                    <label>Сценарий:</label>
+                    <select name="value" class="form-select" onchange="this.form.submit()">
+                        <option value="reactivation" {{ 'selected' if scenario == 'reactivation' }}>Реактивация</option>
+                        <option value="new_lead" {{ 'selected' if scenario == 'new_lead' }}>Новый лид</option>
+                        <option value="nps" {{ 'selected' if scenario == 'nps' }}>Опрос NPS</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
